@@ -1,1 +1,1 @@
-{message}
+User query:{query}

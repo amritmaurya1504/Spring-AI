@@ -22,5 +22,13 @@ public class ChatController {
         return ResponseEntity.ok(chatService.chat(query, userId));
     }
 
+    @GetMapping(value = "/vector-db/chat")
+    public ResponseEntity<String> chatVector(
+            @RequestParam(value = "q") String query,
+            @RequestHeader("userId") String userId
+    ) {
+        return ResponseEntity.ok(chatService.chatTemplate3(query, userId));
+    }
+
 
 }
