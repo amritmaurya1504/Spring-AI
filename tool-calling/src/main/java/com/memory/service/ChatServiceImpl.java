@@ -1,6 +1,7 @@
 package com.memory.service;
 
 import com.memory.tools.DateTimeTool;
+import com.memory.tools.WeatherTool;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
@@ -8,9 +9,11 @@ import org.springframework.stereotype.Service;
 public class ChatServiceImpl implements ChatService{
 
     private ChatClient chatClient;
+    private WeatherTool weatherTool;
 
-    public ChatServiceImpl(ChatClient chatClient) {
+    public ChatServiceImpl(ChatClient chatClient, WeatherTool weatherTool) {
         this.chatClient = chatClient;
+        this.weatherTool = weatherTool;
     }
 
     // Chat method::: get response from LLM model
@@ -21,7 +24,7 @@ public class ChatServiceImpl implements ChatService{
     public String chat(String query) {
         return this.chatClient
                 .prompt()
-                .tools(new DateTimeTool())
+                .tools(new DateTimeTool(), weatherTool)
                 .user(query)
                 .call()
                 .content();
