@@ -29,7 +29,7 @@ public class Ticket {
     private Priority priority;
 
     @Column(unique = true)
-    private String userName;
+    private String email;
 
     @Enumerated(EnumType.STRING)
     private Status status;

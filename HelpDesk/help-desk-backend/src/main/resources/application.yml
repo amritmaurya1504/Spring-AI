@@ -20,6 +20,12 @@ spring:
       chat:
         options:
           model: gpt-4o-mini
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: ALWAYS
+
 server:
   port: 8081
 

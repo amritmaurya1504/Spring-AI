@@ -3,6 +3,7 @@ package com.pwa.helpdesk.services.impl;
 import com.pwa.helpdesk.entity.Ticket;
 import com.pwa.helpdesk.respositories.TicketRepository;
 import com.pwa.helpdesk.services.TicketService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +16,9 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    @Transactional
     public Ticket createTicket(Ticket ticket) {
+        ticket.setId(null);
         return ticketRepository.save(ticket);
     }
 
@@ -32,7 +35,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Ticket getTicketByUserName(String userName) {
-        return ticketRepository.findByUserName(userName).orElseThrow(() -> new RuntimeException("Ticket not found"));
+    public Ticket getTicketByEmail(String email) {
+        return ticketRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Ticket not found"));
     }
 }

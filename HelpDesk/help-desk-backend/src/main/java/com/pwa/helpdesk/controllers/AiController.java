@@ -6,23 +6,27 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/api/v1/ai")
 @RequiredArgsConstructor
 @Getter
 @Setter
+@CrossOrigin("http://localhost:5173")
 public class AiController {
 
     private final AiService aiService;
 
     @PostMapping("/chat")
-    public ResponseEntity<String> getResponse(@RequestBody String query) {
-        return ResponseEntity.ok(aiService.getResponseFromAssistant(query));
+    public ResponseEntity<String> getResponse(@RequestBody String query, @RequestHeader("ConversationId") String conversationId) {
+        return ResponseEntity.ok(aiService.getResponseFromAssistant(query, conversationId));
+    }
+
+    @PostMapping("/stream/chat")
+    public ResponseEntity<Flux<String>> streamResponse(@RequestBody String query, @RequestHeader("ConversationId") String conversationId) {
+        return ResponseEntity.ok(aiService.streamResponseFromAssistant(query, conversationId));
     }
 
 }
